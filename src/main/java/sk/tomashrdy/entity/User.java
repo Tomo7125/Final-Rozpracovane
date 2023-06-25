@@ -6,23 +6,24 @@ import sk.tomashrdy.dbCon.DatabaseConnection;
 
 public class User {
     String name , lastName , email , password;
-    boolean isAdmin = false;
+    boolean admin = false;
 
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
 
+    //Konötruktor pouûÌvany keÔ ùaham udaje z datab·zy a ukladam pouûÌvatela tam mi netreba heslo
     public User(String name, String lastName, String email , boolean isAdmin) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
     }
-
+    //Konötruktor pouûÌvany pri vytv·rani pouûÌvatela tu mi netreba admina lebo je ötandardne false
     public User(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;
@@ -46,10 +47,12 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    //Metoda ktor· mi prid· noveho uûÌvatela do datab·zy pomocou mojej metÛdy executeUpdate
     public void userRegister(User user){
         DatabaseConnection databaseConnection = new DatabaseConnection();
         databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin) VALUES (?, ?, ?, ?, ?)" ,
-                user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.isAdmin);
+                user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.admin);
 
     }
 }

@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public interface HashPassword {
 
-
+    //Metoda na zaöifrovanie hesla ( zaöifrovanie je nevratnÈ neskÙr budem pri porovn·vani öifrovaù rovnako aj zadanÈ heslo a porovn·vaù hesl· po öifrovanÌ )
     static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -18,6 +18,7 @@ public interface HashPassword {
         }
     }
 
+    //V tejto metode len zariadim aby sa mi vracal po zaöifrovanÌ String ( obidve metÛdy generovala UI )
     static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {

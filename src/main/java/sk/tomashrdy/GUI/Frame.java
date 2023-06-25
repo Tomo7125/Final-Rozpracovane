@@ -35,6 +35,7 @@ public class Frame extends JFrame {
         // Nastavenie ve¾kosti okna
         setBounds(insetX, insetY, width, height);
 
+
         lw = new LoginWindow(this , start);
         setContentPane(lw.getContent());
 

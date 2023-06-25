@@ -24,12 +24,14 @@ public class RegisterWindow implements ActionListener, HashPassword , Registrati
     private JButton buttonRegister;
     private JButton buttonBackToMenu;
 
+    //Konštruktor pre registraèné okno
     public RegisterWindow(Frame frame, Start start) {
         this.frame = frame;
         this.start = start;
         buttonBackToMenu.addActionListener(this);
         buttonRegister.addActionListener(this);
 
+        //Nastavím si všetky polia tak aby po stlaèení klávesy enter program vykonal kliknutie na register
         tfFirstName.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -107,6 +109,7 @@ public class RegisterWindow implements ActionListener, HashPassword , Registrati
     }
 
 
+    //Pošle panel ako context pre okno
     public JPanel getContent(){return this.panelRegister;}
 
     @Override
@@ -116,26 +119,39 @@ public class RegisterWindow implements ActionListener, HashPassword , Registrati
             char[] passwordChar = pfPassword.getPassword();
             if (passwordChar.length > 0) {
                 passNotEmpty = true;}
+            //Hore mam metodu ktorá zistuje èi je heslo prázdne
+            //Dole skontrolujem èi su všetky polia vyplnené
             if (!tfFirstName.getText().isEmpty() && !tfLastName.getText().isEmpty() && !tfEmail.getText().isEmpty() && passNotEmpty) {
+                //Skontrolujem èi má email správny formát
                 if (RegistrationListener.validateEmail(tfEmail.getText())) {
+                    //Skontrolujem èi u email neexistuje
                     if (!RegistrationListener.emailExist(tfEmail.getText())) {
+                        //Uloím si do stringov heslá z passwordov
                         char[] passwordArray = pfPassword.getPassword();
                         String pass1 = new String(passwordArray);
                         char[] passwordConfirmArray = pfPasswordConfirm.getPassword();
                         String pass2 = new String(passwordConfirmArray);
+                        //Skontrolujem èi sa zhodujú heslá
                         if (pass1.equals(pass2)) {
+                            //Skontrolujem èi heslá obsahujú potrebné znaky
                             if (RegistrationListener.validatePassword(pass1)) {
+                                //Vytvorím nového Usera ktorému nastavím hodnoty z fieldov
                                 User newUser = new User(tfFirstName.getText(), tfLastName.getText(), tfEmail.getText().toLowerCase(), HashPassword.hashPassword(pass1));
+                                //Zavolám si metódu ktorá zaregistruje uívatela
                                 newUser.userRegister(newUser);
+                                // Zavolám vyskakovacie okno ktore oznámy e je uívatel úspešne zaregistrovanı
                                 RegistrationListener.registrationSuccessful(newUser.getName());
+                                //Nastavím novı context
                                 frame.setContext(new LoginWindow(frame , start).getContent());
                             } else
+                                // Ak je heslo v zlom formáte pošlem do okna text ktorı povie uívatelovi èo musí heslo obsahova
                                 RegistrationListener.registrationFailed("<html>The password must contain:<br>\" +\n" +
                                         "                        \"at least one lowercase letter<br>\" +\n" +
                                         "                        \"at least one uppercase letter<br>\" +\n" +
                                         "                        \"at least one digit<br>\" +\n" +
                                         "                        \"at least one special character (!@#$%^&*()_+|`{}[]:\\\";'<>?,./)<br>\" +\n" +
                                         "                        \"a length of 6 to 16 characters.</html>");
+                            //Ak sa hesla nezhodujú vykoná sa okno so správou a tak isto aj nišie metódy else len popisuju problem pre ktorı program nepokraèuje
                         }else RegistrationListener.registrationFailed("Password not match");
                     }else RegistrationListener.registrationFailed("Email already exist");
                 }else RegistrationListener.registrationFailed("The email does not have the correct format.");
@@ -143,6 +159,7 @@ public class RegisterWindow implements ActionListener, HashPassword , Registrati
                 RegistrationListener.registrationFailed("All field must be filled !");
             }
         }
+        // Po stlaèení back to menu sa nastavı novı context
         if (e.getSource().equals(buttonBackToMenu)){
             frame.setContext(new LoginWindow(frame , start).getContent());
         }

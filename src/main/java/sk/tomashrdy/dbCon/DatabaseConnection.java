@@ -1,6 +1,9 @@
 package sk.tomashrdy.dbCon;
 
+import sk.tomashrdy.entity.User;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseConnection {
     private Connection connection;
@@ -8,17 +11,19 @@ public class DatabaseConnection {
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
     private final String password = System.getenv("DB_PASSWORD");
+
     //Metoda pre pripojenie na DB
-    public String connect(){
+    public String connect() {
         try {
-            connection = DriverManager.getConnection(url , username , password);
+            connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
     }
+
     //Metoda pre odpojenie DB
-    public void disconnect(){
+    public void disconnect() {
         try {
             if (connection != null) {
                 connection.close();
@@ -27,8 +32,9 @@ public class DatabaseConnection {
             // Spracovanie chyby pri uzatv·ranÌ spojenia
         }
     }
+
     // Metoda ktora odosiela query do DB a vracia mi ResultSet
-    public ResultSet executeQuery(String query){
+    public ResultSet executeQuery(String query) {
         ResultSet resultSet = null;
         try {
             connect();
@@ -41,6 +47,7 @@ public class DatabaseConnection {
         }
         return resultSet;
     }
+
     //Metoda ktora mi updatuje data Napriklad ked chcem pridaù do datab·zy z·znam a vracia mi int s poËtom zaznamov ktorÈ boli zmenenÈ / pridanÈ
     public int executeUpdate(String query, Object... parameters) {
         int rowsAffected = 0;
@@ -62,10 +69,27 @@ public class DatabaseConnection {
             statement.setObject(i + 1, parameters[i]);
         }
     }
+
     //Metoda vytvorÌ prepojenie na databazu a vrati prepareStatement ktor˝ obsahuje pripraven˙ query na odoslanie do DB
     public PreparedStatement prepareStatement(String query) throws SQLException {
         connect();
         return connection.prepareStatement(query);
+    }
+
+    public ArrayList<User> getAllUser() {
+        ArrayList<User> allUser = new ArrayList<>();
+        ResultSet users = executeQuery("SELECT * FROM users");
+
+        try {
+            while (users.next()) {
+                User user = new User(users.getString("first_name"), users.getString("last_name"),
+                        users.getString("email"), users.getBoolean("isAdmin"));
+                allUser.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allUser;
     }
 }
 

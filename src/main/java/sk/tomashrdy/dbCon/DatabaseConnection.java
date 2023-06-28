@@ -7,7 +7,7 @@ public class DatabaseConnection {
     //Hodnoty pre pripojenie na moju DB
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
-    private final String password = "postgres";
+    private final String password = System.getenv("DB_PASSWORD");
     //Metoda pre pripojenie na DB
     public String connect(){
         try {

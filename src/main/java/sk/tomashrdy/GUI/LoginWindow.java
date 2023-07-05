@@ -93,11 +93,11 @@ public class LoginWindow implements ActionListener {
                     //Odoölem onlineUsera do startu kde ho budem maù uloûenÈho po zvyöok behu programu
                     start.setUser(onlineUser);
                     //Zavol·m si okno pre uspeöne prihl·senie a potom nastav˝m nov˝ context
-                    loginSuccessful("Welcome " +  onlineUser.getName());
+                    JOptionPane.showMessageDialog(null , "Welcome" , "Login successful" , JOptionPane.INFORMATION_MESSAGE);
                     frame.setContext(new DashBoard(frame , start).getContent());
                     //Niûöie volam okna pri ne˙speönom prihlaseny podla toho Ëo sa udialo
-                }else loginFailed("Invalid email or password");
-            }else loginFailed("Login or password is empty");
+                }else JOptionPane.showMessageDialog(null , "Invalid email or password" , "Login failed" , JOptionPane.WARNING_MESSAGE);
+            }else JOptionPane.showMessageDialog(null , "Login or password is empty" , "Login fialed" , JOptionPane.WARNING_MESSAGE);
         }
 
         if (e.getSource().equals(buttonRegister)){
@@ -158,11 +158,5 @@ public class LoginWindow implements ActionListener {
         }
 
         return loginSuccessful;
-    }
-    static void loginSuccessful(String username){
-        MiniFrame logSuccessful = new MiniFrame("Login" , username , Color.GREEN);
-    }
-    static void loginFailed(String message){
-        MiniFrame logFailed = new MiniFrame("Login fialed" , message , Color.RED);
     }
 }

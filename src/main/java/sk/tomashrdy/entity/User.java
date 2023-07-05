@@ -16,6 +16,9 @@ public class User {
         this.admin = admin;
     }
 
+    public User() {
+    }
+
     //Konštruktor pouívany keï aham udaje z databázy a ukladam pouívatela tam mi netreba heslo
     public User(String name, String lastName, String email , boolean isAdmin) {
         this.name = name;

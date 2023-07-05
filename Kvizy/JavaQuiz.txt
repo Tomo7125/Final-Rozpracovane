@@ -1,0 +1,6 @@
+Rychle Otazky z Javy;JAVA;3
+Akı je úèel jazyka Java?;Vytvára webové stránky;0;Programova roboty;0;Vıvoj mobilnıch aplikácií;1;Spravova databázy;0
+Ktorá z nasledujúcich tvrdení je pravdivá pre jazyk Java?;Je kompilovanı do strojového kódu;0;Je interpretovanı poèítaèom priamo zo zdrojového kódu;0;Je hybridnı jazyk kombinujúci kompiláciu a interpretáciu;1;Nie je moné ho spúša na operaènom systéme Windows;0
+Ktorı z nasledujúcich prvkov nepatrí do objektovo-orientovaného programovania v Jave?;Triedy;0;Dediènos;0;Polymorfizmus;0;Globálne premenné;1
+Ako sa v Jave deklaruje premenná, ktorá nie je moná na zmenu (konštanta)?;final;1;static;0;abstract;0;public;0
+Ktorá z nasledujúcich vırokov je pravdivá o vınimkách (exceptions) v Jave?;Vınimky sú len chyby v programe, ktoré je moné vdy predvída a ošetri.;0;Vınimky sú neiaduce a program by sa nemal snai s nimi pracova.;0;Vınimky môu nasta poèas behu programu a môu by ošetrené vıvojárom.;1;Vınimky sa v Jave vôbec nepouívajú.;0

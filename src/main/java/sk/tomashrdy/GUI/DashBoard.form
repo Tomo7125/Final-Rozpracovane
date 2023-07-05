@@ -41,7 +41,7 @@
           <text value="Admin menu"/>
         </properties>
       </component>
-      <component id="fae28" class="javax.swing.JButton" binding="quizButton" default-binding="true">
+      <component id="fae28" class="javax.swing.JButton" binding="buttonQuiz">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

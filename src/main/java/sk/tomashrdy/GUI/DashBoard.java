@@ -13,6 +13,7 @@ public class DashBoard implements ActionListener {
     private JLabel jlAdmin;
     private JLabel jlMenu;
     private JButton buttonAdminMenu;
+    private JButton buttonLogout;
     Frame frame;
     Start start;
 
@@ -21,6 +22,7 @@ public class DashBoard implements ActionListener {
         this.frame = frame;
         this.start = start;
         buttonAdminMenu.addActionListener(this);
+        buttonLogout.addActionListener(this);
 
         //Nasetujem pre každý jLabel potrebne udaje z mojho usera ktorý je ulozeny ako prihlaseny
         jlName.setText("Login : " + start.getUser().getName() + " " + start.getUser().getLastName());
@@ -35,6 +37,9 @@ public class DashBoard implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonAdminMenu)){
             frame.setContext(new AdminMenu(frame , start).getContent());
+        }
+        if (e.getSource().equals(buttonLogout)){
+            frame.setContext(new LoginWindow(frame , start).getContent());
         }
     // Príprava na neskôr
     }

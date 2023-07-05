@@ -144,11 +144,10 @@ public class RegisterWindow implements ActionListener, HashPassword {
                                 User newUser = new User(tfFirstName.getText(), tfLastName.getText(), tfEmail.getText().toLowerCase(), HashPassword.hashPassword(pass1));
                                 //Zavol·m si metÛdu ktor· zaregistruje uûÌvatela
                                 newUser.userRegister(newUser);
-
-                                // Zavol·m vyskakovacie okno ktore ozn·my ûe je uûÌvatel ˙speöne zaregistrovan˝
-                                JOptionPane.showMessageDialog(null , "Registration is complete" , "Registration successful" , JOptionPane.INFORMATION_MESSAGE);
                                 //NastavÌm nov˝ context
                                 frame.setContext(new LoginWindow(frame , start).getContent());
+                                // Zavol·m vyskakovacie okno ktore ozn·my ûe je uûÌvatel ˙speöne zaregistrovan˝
+                                JOptionPane.showMessageDialog(null , "Registration is complete" , "Registration successful" , JOptionPane.INFORMATION_MESSAGE);
                             } else
                                 // Ak je heslo v zlom form·te poölem do okna text ktor˝ povie uûÌvatelovi Ëo musÌ heslo obsahovaù
                                 JOptionPane.showMessageDialog(null , "The password must contain:\n" +

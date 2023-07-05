@@ -1,5 +1,6 @@
 package sk.tomashrdy.GUI;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import sk.tomashrdy.dbCon.DatabaseConnection;
 import sk.tomashrdy.entity.HashPassword;
 import sk.tomashrdy.entity.Start;
@@ -92,9 +93,9 @@ public class LoginWindow implements ActionListener {
                     onlineUser = getUserByEmail(tfLogin.getText().toLowerCase());
                     //Odoölem onlineUsera do startu kde ho budem maù uloûenÈho po zvyöok behu programu
                     start.setUser(onlineUser);
-                    //Zavol·m si okno pre uspeöne prihl·senie a potom nastav˝m nov˝ context
-                    JOptionPane.showMessageDialog(null , "Welcome" , "Login successful" , JOptionPane.INFORMATION_MESSAGE);
+                    //Poölem nov˝ content a zavolam vyskakovacie okno
                     frame.setContext(new DashBoard(frame , start).getContent());
+                    JOptionPane.showMessageDialog(null , "Welcome" , "Login successful" , JOptionPane.INFORMATION_MESSAGE);
                     //Niûöie volam okna pri ne˙speönom prihlaseny podla toho Ëo sa udialo
                 }else JOptionPane.showMessageDialog(null , "Invalid email or password" , "Login failed" , JOptionPane.WARNING_MESSAGE);
             }else JOptionPane.showMessageDialog(null , "Login or password is empty" , "Login fialed" , JOptionPane.WARNING_MESSAGE);
@@ -156,7 +157,6 @@ public class LoginWindow implements ActionListener {
         } catch (SQLException e) {
             // Spracovanie chyby pri vykon·vanÌ dotazu
         }
-
         return loginSuccessful;
     }
 }

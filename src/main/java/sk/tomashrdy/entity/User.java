@@ -56,6 +56,6 @@ public class User {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin) VALUES (?, ?, ?, ?, ?)" ,
                 user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.admin);
-
+        databaseConnection.disconnect();
     }
 }

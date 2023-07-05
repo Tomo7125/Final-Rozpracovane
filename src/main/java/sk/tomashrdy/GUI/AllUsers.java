@@ -81,6 +81,16 @@ public class AllUsers implements ActionListener {
             JOptionPane.showMessageDialog(null , "All users is delete" , "Delete" , JOptionPane.WARNING_MESSAGE);
             frame.setContext(new AllUsers(frame , start).getContent());
         }
+        if (e.getSource().equals(buttonDeleteUser)){
+            int selectedRow = table1.getSelectedRow();
+            Object email = table1.getValueAt(selectedRow, 3);
+            if (email != null) {
+                String emailValue = email.toString();
+                start.deleteUserByEmail(emailValue);
+                JOptionPane.showMessageDialog(null , emailValue + " is delete" , "User delete" , JOptionPane.INFORMATION_MESSAGE);
+                frame.setContext(new AllUsers(frame , start).getContent());
+            }
+        }
     }
     public ArrayList<User> getAllUsers() {
         ArrayList<User> allUsers = new ArrayList<>();

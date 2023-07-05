@@ -14,6 +14,7 @@ public class DashBoard implements ActionListener {
     private JLabel jlMenu;
     private JButton buttonAdminMenu;
     private JButton buttonLogout;
+    private JButton quizButton;
     Frame frame;
     Start start;
 

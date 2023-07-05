@@ -1,6 +1,7 @@
 package sk.tomashrdy.entity;
 
 import sk.tomashrdy.GUI.Frame;
+import sk.tomashrdy.dbCon.DatabaseConnection;
 
 public class Start {
     //Použijem na uloženie prihláseného používatela
@@ -19,5 +20,12 @@ public class Start {
     }
     //Metóda pre spustenie programu
     public void spusti(){Frame frame = new Frame(this);}
+
+    public void deleteUserByEmail(String email){
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection.executeUpdate("DELETE FROM users WHERE email = ?" ,
+                email);
+        databaseConnection.disconnect();
+    }
 
 }

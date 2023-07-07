@@ -1,13 +1,11 @@
 package sk.tomashrdy.GUI;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import sk.tomashrdy.dbCon.DatabaseConnection;
 import sk.tomashrdy.entity.HashPassword;
 import sk.tomashrdy.entity.Start;
 import sk.tomashrdy.entity.User;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -110,7 +108,7 @@ public class LoginWindow implements ActionListener {
     public User getUserByEmail(String email) {
         User user = null;
         //Dotaz na DB aby mi vitiahla first_name , last_name , email a to èi je admin užívatel podla emailu ( vstupný parameter email )
-        String query = "SELECT first_name, last_name, email , isAdmin FROM users WHERE email = ?";
+        String query = "SELECT first_name, last_name, email , isAdmin , score FROM users WHERE email = ?";
 
         DatabaseConnection databaseConnection = new DatabaseConnection();
         try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
@@ -123,9 +121,10 @@ public class LoginWindow implements ActionListener {
                 String name = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String userEmail = resultSet.getString("email");
+                int score = resultSet.getInt("score");
                 boolean isAdmin = resultSet.getBoolean("isAdmin");
                 //Vytvorím si Usera a nasetujem mu premenne
-                user = new User(name, lastName, userEmail , isAdmin);
+                user = new User(name, lastName, userEmail , isAdmin , score);
             }
         } catch (SQLException e) {
             // Spracovanie chyby pri vykonávaní dotazu

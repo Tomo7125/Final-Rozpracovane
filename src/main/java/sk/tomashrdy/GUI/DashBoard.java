@@ -28,8 +28,6 @@ public class DashBoard implements ActionListener {
 
         //Nasetujem pre každý jLabel potrebne udaje z mojho usera ktorý je ulozeny ako prihlaseny
         jlName.setText("Login : " + start.getUser().getName() + " " + start.getUser().getLastName());
-   //     jlEmail.setText("Email používatela : " + start.getUser().getEmail());
-    //    jlAdmin.setText(start.getUser().isAdmin() ? "Používatel je admin." : "Používatel nieje admin");
         if (!start.getUser().isAdmin()){buttonAdminMenu.setVisible(false);}
     }
 

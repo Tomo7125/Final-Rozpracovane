@@ -83,7 +83,7 @@ public class DatabaseConnection {
         try {
             while (users.next()) {
                 User user = new User(users.getString("first_name"), users.getString("last_name"),
-                        users.getString("email"), users.getBoolean("isAdmin"));
+                        users.getString("email"), users.getBoolean("isAdmin") , users.getInt("score"));
                 allUser.add(user);
             }
         } catch (SQLException e) {

@@ -43,8 +43,9 @@ public class AllUsers implements ActionListener {
             model.addColumn("first_name");
             model.addColumn("last_name");
             model.addColumn("email");
+            model.addColumn("Score");
             model.addColumn("isAdmin");
-            model.addRow(new Object[]{ "Index" , "Name" , "Last name" , "Email" , "Admin"});
+            model.addRow(new Object[]{ "Index" , "Name" , "Last name" , "Email" ,"Score" , "Admin"});
 //            TableColumn column = table1.getColumnModel().getColumn(0); // Získanie st?pca pod?a indexu (v tomto prípade index 0)
 //            column.setPreferredWidth(30); // nastavý šírku prvého stlpca
 
@@ -55,11 +56,12 @@ public class AllUsers implements ActionListener {
                     String first_name = user.getName();
                     String last_name = user.getLastName();
                     String email = user.getEmail();
+                    int score = user.getScore();
                     String admin = user.isAdmin() ? "User is admin" : "user not admin";
 
 
                     //pridame novy riadok do tabulky
-                    model.addRow(new Object[]{index, first_name, last_name,email ,  admin});
+                    model.addRow(new Object[]{index, first_name , last_name , email ,score , admin});
                     index++;
                 }
             }
@@ -104,9 +106,10 @@ public class AllUsers implements ActionListener {
                 String name = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
+                int score = resultSet.getInt("score");
                 Boolean isAdmin = resultSet.getBoolean("isAdmin");
 
-                User user = new User(name, lastName, email , isAdmin);
+                User user = new User(name, lastName, email , isAdmin , score);
                 allUsers.add(user);
             }
             dbConnect.disconnect();

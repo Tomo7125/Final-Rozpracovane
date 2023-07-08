@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 
 public class DashBoard implements ActionListener {
     private JPanel panelDashBoard;
-    private JLabel jlName;
+    private JLabel jlScore;
     private JLabel jlEmail;
     private JLabel jlAdmin;
     private JLabel jlMenu;
     private JButton buttonAdminMenu;
     private JButton buttonLogout;
     private JButton buttonQuiz;
+    private JLabel jlName;
     Frame frame;
     Start start;
 
@@ -28,6 +29,7 @@ public class DashBoard implements ActionListener {
 
         //Nasetujem pre každý jLabel potrebne udaje z mojho usera ktorý je ulozeny ako prihlaseny
         jlName.setText("Login : " + start.getUser().getName() + " " + start.getUser().getLastName());
+        jlScore.setText("Score : " + start.getUser().getScore());
         if (!start.getUser().isAdmin()){buttonAdminMenu.setVisible(false);}
     }
 

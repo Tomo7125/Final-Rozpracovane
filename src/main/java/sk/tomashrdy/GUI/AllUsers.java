@@ -57,7 +57,7 @@ public class AllUsers implements ActionListener {
                     String last_name = user.getLastName();
                     String email = user.getEmail();
                     int score = user.getScore();
-                    String admin = user.isAdmin() ? "User is admin" : "user not admin";
+                    String admin = user.isAdmin() ? "User is admin" : "User is not admin";
 
 
                     //pridame novy riadok do tabulky

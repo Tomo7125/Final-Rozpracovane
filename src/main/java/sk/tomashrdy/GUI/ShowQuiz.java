@@ -1,6 +1,7 @@
 package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.entity.Quiz;
+import sk.tomashrdy.entity.QuizCategory;
 import sk.tomashrdy.entity.Start;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class ShowQuiz implements ActionListener {
     private JPanel panelQuiz;
     private JLabel quizLabel;
-    private JComboBox comboBoxDificulity;
+    private JComboBox comboBoxDificulty;
     private JComboBox comboBoxCategory;
     private JTable table1;
     private JButton buttonStartQuiz;
@@ -24,7 +25,7 @@ public class ShowQuiz implements ActionListener {
         this.frame = frame;
         this.start = start;
 
-        comboBoxDificulity.addActionListener(this);
+        comboBoxDificulty.addActionListener(this);
         comboBoxCategory.addActionListener(this);
         buttonStartQuiz.addActionListener(this);
         buttonBack.addActionListener(this);
@@ -37,6 +38,7 @@ public class ShowQuiz implements ActionListener {
         model.addColumn("Quiz Name");
         model.addColumn("Category");
         model.addColumn("Difficculty");
+        model.addRow(new Object[]{ "Index" , "Quiz Name" ,"Category", "Difficulty"});
 
         int index = 1;
         for (Quiz quiz : quizs){
@@ -50,14 +52,65 @@ public class ShowQuiz implements ActionListener {
             }
         }
 
-        DefaultComboBoxModel<Integer> defaultComboBoxModel = new DefaultComboBoxModel<>();
-        comboBoxDificulity.setModel(defaultComboBoxModel);
-        defaultComboBoxModel.addElement(null);
-        for (int i = 1 ; i <= 5 ; i++){
-            defaultComboBoxModel.addElement(i);
+        DefaultComboBoxModel<QuizCategory> comboboxModelKategoria = new DefaultComboBoxModel<>();
+
+        comboboxModelKategoria.addElement(null);
+        for (QuizCategory k: QuizCategory.values()) {
+            comboboxModelKategoria.addElement(k);
         }
+        comboBoxCategory.setModel(comboboxModelKategoria);
+
+
+        DefaultComboBoxModel<Integer> comboboxModelObtiaznost = new DefaultComboBoxModel<>();
+
+        comboboxModelObtiaznost.addElement(null);
+        for (int i = 1; i <= 5; i++){
+            comboboxModelObtiaznost.addElement(i);
+        }
+        comboBoxDificulty.setModel(comboboxModelObtiaznost);
     }
 
+    public void restartTable(){
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        model.setRowCount(0);
+        model.setColumnCount(0);
+    }
+
+    public void updateTableByDifficulty(Integer difficulty){
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+
+        model.addColumn("Index");
+        model.addColumn("Quiz Name");
+        model.addColumn("Category");
+        model.addColumn("Difficculty");
+        model.addRow(new Object[]{ "Index" , "Quiz Name" ,"Category", "Difficulty"});
+        int index = 1;
+        for (Quiz quiz : this.start.quizForTable()){
+            if (quiz != null && (difficulty == null || quiz.getDifficulty() == difficulty)){
+                model.addRow(new Object[]{index , quiz.getName() , quiz.getQuizCategory() , quiz.getDifficulty()});
+                index++;
+            }
+        }
+        table1.setModel(model);
+    }
+
+    public void updateTableByCategory(QuizCategory quizCategory){
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+
+        model.addColumn("Index");
+        model.addColumn("Quiz Name");
+        model.addColumn("Category");
+        model.addColumn("Difficculty");
+        model.addRow(new Object[]{ "Index" , "Quiz Name" ,"Category", "Difficulty"});
+        int index = 1;
+        for (Quiz quiz : this.start.quizForTable()){
+            if (quiz != null && (quizCategory == null || quiz.getQuizCategory() == quizCategory)){
+                model.addRow(new Object[]{index , quiz.getName() , quiz.getQuizCategory() , quiz.getDifficulty()});
+                index++;
+            }
+        }
+        table1.setModel(model);
+    }
 
 
     public JPanel getContent(){return panelQuiz;}
@@ -66,6 +119,16 @@ public class ShowQuiz implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonBack)){
             frame.setContext(new DashBoard(frame , start).getContent());
+        }
+        if (e.getSource().equals(comboBoxCategory)){
+            QuizCategory category = (QuizCategory) comboBoxCategory.getSelectedItem();
+            restartTable();
+            updateTableByCategory(category);
+        }
+        if (e.getSource().equals(comboBoxDificulty)){
+            Integer difficulty = (Integer) comboBoxDificulty.getSelectedItem();
+            restartTable();
+            updateTableByDifficulty(difficulty);
         }
     }
 }

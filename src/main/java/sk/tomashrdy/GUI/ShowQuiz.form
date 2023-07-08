@@ -17,7 +17,7 @@
           <text value="Quiz"/>
         </properties>
       </component>
-      <component id="208af" class="javax.swing.JComboBox" binding="comboBoxDificulity">
+      <component id="208af" class="javax.swing.JComboBox" binding="comboBoxDificulty">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -52,7 +52,7 @@
         </constraints>
         <properties>
           <font name="DejaVu Sans Mono" size="16"/>
-          <text value="Dificulity"/>
+          <text value="Dificulty"/>
         </properties>
       </component>
       <component id="4c960" class="javax.swing.JButton" binding="buttonStartQuiz">

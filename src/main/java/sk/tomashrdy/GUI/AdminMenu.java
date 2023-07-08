@@ -38,7 +38,7 @@ public class AdminMenu implements ActionListener {
             frame.setContext(new AllUsers(frame , start).getContent());
         }
         if (e.getSource().equals(buttonAllQuiz)){
-            frame.setContext(new ShowQuiz(frame , start).getContent());
+            frame.setContext(new AdminQuizMenu(frame , start).getContent());
         }
     }
 }

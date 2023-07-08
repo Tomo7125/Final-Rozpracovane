@@ -3,21 +3,25 @@ package sk.tomashrdy.entity;
 import java.util.ArrayList;
 
 public class QuizQuestion {
-    private String text_otazky;
-    //kolekcia moznosti
-    private ArrayList<QuizOptions> moznosti;
+    private String textQuestion;
+    private ArrayList<QuizOptions> textOptions;
 
-    public QuizQuestion(String text_otazky, ArrayList<QuizOptions> moznosti) {
-        this.text_otazky = text_otazky;
-        this.moznosti = moznosti;
+    public QuizQuestion(String textQuestion, ArrayList<QuizOptions> textOptions) {
+        this.textQuestion = textQuestion;
+        this.textOptions = textOptions;
     }
 
 
-    public String getText_otazky() {
-        return text_otazky;
+    public String getTextQuestion() {
+        return textQuestion;
     }
 
-    public ArrayList<QuizOptions> getMoznosti() {
-        return moznosti;
+    public ArrayList<QuizOptions> getTextOptions() {return textOptions;}
+
+    public void addOptions(QuizOptions option){
+        if (textOptions == null){
+            textOptions = new ArrayList<>();
+        }
+        this.textOptions.add(option);
     }
 }

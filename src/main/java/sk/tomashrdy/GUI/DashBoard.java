@@ -42,7 +42,7 @@ public class DashBoard implements ActionListener {
             frame.setContext(new LoginWindow(frame , start).getContent());
         }
         if (e.getSource().equals(buttonQuiz)){
-            frame.setContext(new SelectQuiz(frame , start).getContent());
+            frame.setContext(new ShowQuiz(frame , start).getContent());
         }
     // Príprava na neskôr
     }

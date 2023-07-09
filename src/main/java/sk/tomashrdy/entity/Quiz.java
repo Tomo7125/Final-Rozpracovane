@@ -16,6 +16,16 @@ public class Quiz {
     private int difficulty; //1..5
     //kolekcia otazok
     private ArrayList<QuizQuestion> questions;
+    private String shortDescrition;
+
+    public String getShortDescrition() {
+        return shortDescrition;
+    }
+
+    public void setShortDescrition(String shortDescrition) {
+        this.shortDescrition = shortDescrition;
+    }
+
     public String getName() {
         return name;
     }

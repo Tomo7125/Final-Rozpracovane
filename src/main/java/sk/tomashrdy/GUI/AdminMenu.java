@@ -13,6 +13,7 @@ public class AdminMenu implements ActionListener {
     private JButton buttonAllUsers;
     private JButton butonBack;
     private JLabel jlName;
+    private JButton buttonAddQuiz;
     private Frame frame;
     private Start start;
 
@@ -22,6 +23,7 @@ public class AdminMenu implements ActionListener {
         butonBack.addActionListener(this);
         buttonAllQuiz.addActionListener(this);
         buttonAllUsers.addActionListener(this);
+        buttonAddQuiz.addActionListener(this);
 
         jlName.setText("Login : " + start.getUser().getName() + " " + start.getUser().getLastName());
     }
@@ -39,6 +41,9 @@ public class AdminMenu implements ActionListener {
         }
         if (e.getSource().equals(buttonAllQuiz)){
             frame.setContext(new AdminQuizMenu(frame , start).getContent());
+        }
+        if (e.getSource().equals(buttonAddQuiz)){
+            frame.setContext(new CreateQuiz(frame , start).getContent());
         }
     }
 }

@@ -52,22 +52,22 @@ public class ShowQuiz implements ActionListener {
             }
         }
 
-        DefaultComboBoxModel<QuizCategory> comboboxModelKategoria = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<QuizCategory> comboBoxCategory = new DefaultComboBoxModel<>();
 
-        comboboxModelKategoria.addElement(null);
+        comboBoxCategory.addElement(null);
         for (QuizCategory k: QuizCategory.values()) {
-            comboboxModelKategoria.addElement(k);
+            comboBoxCategory.addElement(k);
         }
-        comboBoxCategory.setModel(comboboxModelKategoria);
+        this.comboBoxCategory.setModel(comboBoxCategory);
 
 
-        DefaultComboBoxModel<Integer> comboboxModelObtiaznost = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<Integer> comboBoxDifficulty = new DefaultComboBoxModel<>();
 
-        comboboxModelObtiaznost.addElement(null);
+        comboBoxDifficulty.addElement(null);
         for (int i = 1; i <= 5; i++){
-            comboboxModelObtiaznost.addElement(i);
+            comboBoxDifficulty.addElement(i);
         }
-        comboBoxDificulty.setModel(comboboxModelObtiaznost);
+        comboBoxDificulty.setModel(comboBoxDifficulty);
     }
 
     public void restartTable(){

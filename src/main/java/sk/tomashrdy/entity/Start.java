@@ -148,4 +148,20 @@ public class Start {
             }
         }
     }
+    public void createNewQuiz(Quiz quiz){
+        String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy\\" + quiz.getName() + ".txt";
+        try (FileWriter writer = new FileWriter(path , true)) {
+           writer.write(quiz.getShortDescrition() + ";" + quiz.getQuizCategory() + ";" + quiz.getDifficulty());
+           ArrayList<QuizQuestion> quizQuestions = new ArrayList<>();
+           quizQuestions = quiz.getQuestions();
+           for (int i = 0 ; i < quizQuestions.size() ; i++){
+               writer.write("\n" + quizQuestions.get(i).getTextQuestion());
+               for (int j = 0 ; j < quizQuestions.get(i).getTextOptions().size() ; j++)
+               writer.write(";" + quizQuestions.get(i).getTextOptions().get(j).getTextOptions() + ";" +
+                       (quizQuestions.get(i).getTextOptions().get(j).isCorrect() ? "1" : "0"));
+           }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

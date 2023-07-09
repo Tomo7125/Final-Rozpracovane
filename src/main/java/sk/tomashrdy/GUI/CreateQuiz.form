@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="sk.tomashrdy.GUI.CreateQuiz">
+  <grid id="27dc6" binding="panelAddQuiz" layout-manager="GridLayoutManager" row-count="8" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="100" left="100" bottom="100" right="100"/>
+    <constraints>
+      <xy x="20" y="20" width="906" height="678"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="4e1bd" class="javax.swing.JLabel" binding="jlAddQuiz">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="26"/>
+          <text value="Add new Quiz"/>
+        </properties>
+      </component>
+      <component id="3fbe9" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="18"/>
+          <text value="Name :"/>
+        </properties>
+      </component>
+      <component id="76732" class="javax.swing.JTextField" binding="tfName">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="c8b4e" class="javax.swing.JTextField" binding="tfDescription">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="9405d" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="18"/>
+          <text value="Short description : "/>
+        </properties>
+      </component>
+      <component id="b97c5" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="18"/>
+          <text value="Language :"/>
+        </properties>
+      </component>
+      <component id="aa9f0" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="18"/>
+          <text value="Difficulty :"/>
+        </properties>
+      </component>
+      <component id="91060" class="javax.swing.JComboBox" binding="comboBoxLanguage">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="e6092" class="javax.swing.JSlider" binding="sliderDifficulty">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <majorTickSpacing value="1"/>
+          <maximum value="5"/>
+          <minimum value="1"/>
+          <minorTickSpacing value="1"/>
+          <snapToTicks value="true"/>
+        </properties>
+      </component>
+      <component id="995e4" class="javax.swing.JButton" binding="buttonNext">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Next"/>
+        </properties>
+      </component>
+      <component id="fdef1" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="16"/>
+          <text value="3"/>
+        </properties>
+      </component>
+      <component id="8d2e7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="16"/>
+          <text value="1"/>
+        </properties>
+      </component>
+      <component id="5d5d2" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="16"/>
+          <text value="2"/>
+        </properties>
+      </component>
+      <component id="d0e46" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="16"/>
+          <text value="4"/>
+        </properties>
+      </component>
+      <component id="e9545" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="DejaVu Sans Mono" size="16"/>
+          <text value="5"/>
+        </properties>
+      </component>
+      <component id="6fa1f" class="javax.swing.JButton" binding="buttonBack">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Back"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

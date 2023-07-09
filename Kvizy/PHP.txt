@@ -1,0 +1,6 @@
+Rychle Otazky z PHP;PHP;2
+PHP je skratka pre:;Personal Home Page;0;PHP: Hypertext Preprocessor;1;Public Hosting Platform;0;Programmers' HTML Parser;0;
+Ktorý z nasledujúcich tvrdení je pravdivý pre PHP?;PHP je staticky typovaný jazyk;0;PHP je interpretovaný jazyk;1;PHP je kompilovaný do strojového kódu;0;PHP je závislý na platforme;0;
+Ktorý znak sa používa na začiatku riadku v PHP pre označenie jednoriadkového komentára?;//;1;--;0;/*;0;##;0;
+Ak chceme získať dĺžku reťazca v PHP, použijeme funkciu:;strlen();1;count();0; length();0;size();0;
+Ktorá z nasledujúcich premenných je správne definovaná v PHP?;$myVariable;1;%myVariable;0;#myVariable;0;&myVariable;0;

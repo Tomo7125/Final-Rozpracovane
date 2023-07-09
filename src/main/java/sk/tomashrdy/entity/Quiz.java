@@ -1,5 +1,10 @@
 package sk.tomashrdy.entity;
 
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Quiz {
@@ -11,7 +16,6 @@ public class Quiz {
     private int difficulty; //1..5
     //kolekcia otazok
     private ArrayList<QuizQuestion> questions;
-
     public String getName() {
         return name;
     }

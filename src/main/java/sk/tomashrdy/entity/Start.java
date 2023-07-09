@@ -3,7 +3,11 @@ package sk.tomashrdy.entity;
 import sk.tomashrdy.GUI.Frame;
 import sk.tomashrdy.dbCon.DatabaseConnection;
 
+import javax.swing.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,5 +122,30 @@ public class Start {
             }
         }
         return quiz;
+    }
+    public void deleteQuiz(String quizNameForDelete){
+        String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy";
+        File directory = new File(path);
+        if (directory.exists() && directory.isDirectory()){
+            File[] files = directory.listFiles();
+            if (files != null){
+                for (File file : files){
+                    if (file.isFile() && file.getName().endsWith(".txt")){
+                        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                            String line;
+                            line = reader.readLine();
+                            if (line.startsWith(quizNameForDelete)){
+                                reader.close();
+                                String fileName = file.getName();
+                                Path filePath = Paths.get(path, fileName);
+                                Files.delete(filePath);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

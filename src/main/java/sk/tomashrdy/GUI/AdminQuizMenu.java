@@ -128,5 +128,14 @@ public class AdminQuizMenu implements ActionListener {
             restartTable();
             updateTableByCategory(category);
         }
+        if (e.getSource().equals(buttonDelete)){
+            int selectedRow = tableQuiz.getSelectedRow();
+            Object quizNameForDelete = tableQuiz.getValueAt(selectedRow,1);
+            if (quizNameForDelete != null){
+                String quizNameValue = quizNameForDelete.toString();
+                start.deleteQuiz(quizNameValue);
+                frame.setContext(new AdminQuizMenu(frame , start).getContent());
+            }
+        }
     }
 }

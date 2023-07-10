@@ -1,19 +1,14 @@
 package sk.tomashrdy.GUI;
 
-import sk.tomashrdy.dbCon.DatabaseConnection;
 import sk.tomashrdy.entity.HashPassword;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 import sk.tomashrdy.entity.User;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +23,8 @@ public class RegisterWindow implements ActionListener, HashPassword {
     private JPasswordField pfPasswordConfirm;
     private JButton buttonRegister;
     private JButton buttonBackToMenu;
+    //Pošle panel ako context pre okno
+    public JPanel getContent(){return this.panelRegister;}
 
     //Konštruktor pre registraèné okno
     public RegisterWindow(Frame frame, Start start) {
@@ -113,10 +110,6 @@ public class RegisterWindow implements ActionListener, HashPassword {
         });
     }
 
-
-    //Pošle panel ako context pre okno
-    public JPanel getContent(){return this.panelRegister;}
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonRegister)){
@@ -130,7 +123,7 @@ public class RegisterWindow implements ActionListener, HashPassword {
                 //Skontrolujem èi má email správny formát
                 if (validateEmail(tfEmail.getText())) {
                     //Skontrolujem èi už email neexistuje
-                    if (!emailExist(tfEmail.getText())) {
+                    if (!start.emailExist(tfEmail.getText())) {
                         //Uložím si do stringov heslá z passwordov
                         char[] passwordArray = pfPassword.getPassword();
                         String pass1 = new String(passwordArray);
@@ -145,7 +138,7 @@ public class RegisterWindow implements ActionListener, HashPassword {
                                 //Zavolám si metódu ktorá zaregistruje užívatela
                                 newUser.userRegister(newUser);
                                 //Nastavím nový context
-                                frame.setContext(new LoginWindow(frame , start).getContent());
+                                this.frame.setContext(new LoginWindow(frame , start).getContent());
                                 // Zavolám vyskakovacie okno ktore oznámy že je užívatel úspešne zaregistrovaný
                                 JOptionPane.showMessageDialog(null , "Registration is complete" , "Registration successful" , JOptionPane.INFORMATION_MESSAGE);
                             } else
@@ -166,34 +159,10 @@ public class RegisterWindow implements ActionListener, HashPassword {
         }
         // Po stlaèení back to menu sa nastavý nový context
         if (e.getSource().equals(buttonBackToMenu)){
-            frame.setContext(new LoginWindow(frame , start).getContent());
+            this.frame.setContext(new LoginWindow(frame , start).getContent());
         }
     }
 
-    //Metoda pre ooverenie èi existuje email ( apríklad pri registrácii overím èi email existuje ak ano nepridám ho znova )
-    public boolean emailExist(String email) {
-        boolean mailExist = false;
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        //Vytvorím dotaz aby mi spoèital poèet výskytov kde email je rovnaký ako email ktorý som zadal na vstupe
-        String query = "SELECT COUNT(*) FROM users WHERE email = ?";
-        //Pridám do statementu email zo vstupu ( všade sa snažím ošetri mail metodou .toLoweCase() aby som sa vyhol problémom pri porovnávani )
-        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
-            statement.setString(1, email.toLowerCase());
-            // Ak je poèet výskitov veèší ako 0 tak mi uloží do mailExist true
-            try (ResultSet rs = statement.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt(1);
-                    mailExist = (count > 0);
-                }
-            }
-            databaseConnection.disconnect();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-        return mailExist;
-    }
     //Vytvorenie metody ktorá skontroluje regex a zadané heslo èi obsahuje potrebné znaky
     public boolean validatePassword(String password) {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+|`{}\\[\\]:\";'<>?,./])[a-zA-Z\\d!@#$%^&*()_+|`{}\\[\\]:\";'<>?,./]{6,16}$";

@@ -1,6 +1,6 @@
 package sk.tomashrdy.GUI;
 
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,7 @@ public class AdminMenu implements ActionListener {
     private JButton buttonAddQuiz;
     private Frame frame;
     private Start start;
+    public JPanel getContent(){return this.panelAdminMenu;}
 
     public AdminMenu(Frame frame, Start start) {
         this.frame = frame;
@@ -28,22 +29,19 @@ public class AdminMenu implements ActionListener {
         jlName.setText("Login : " + start.getUser().getName() + " " + start.getUser().getLastName());
     }
 
-    public JPanel getContent(){return this.panelAdminMenu;}
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(butonBack)){
-            frame.setContext(new DashBoard(frame , start).getContent());
+            this.frame.setContext(new DashBoard(frame , start).getContent());
         }
         if (e.getSource().equals(buttonAllUsers)){
-            frame.setContext(new AllUsers(frame , start).getContent());
+            this.frame.setContext(new AllUsers(frame , start).getContent());
         }
         if (e.getSource().equals(buttonAllQuiz)){
-            frame.setContext(new AdminQuizMenu(frame , start).getContent());
+            this.frame.setContext(new AdminQuizMenu(frame , start).getContent());
         }
         if (e.getSource().equals(buttonAddQuiz)){
-            frame.setContext(new CreateQuiz(frame , start).getContent());
+            this.frame.setContext(new CreateQuiz(frame , start).getContent());
         }
     }
 }

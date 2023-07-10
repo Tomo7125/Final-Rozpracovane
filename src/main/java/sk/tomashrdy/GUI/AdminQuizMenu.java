@@ -2,7 +2,7 @@ package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.entity.Quiz;
 import sk.tomashrdy.entity.QuizCategory;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +20,7 @@ public class AdminQuizMenu implements ActionListener {
     private JButton buttonDelete;
     private Frame frame;
     private Start start;
+    public JPanel getContent(){return this.panelAdminQuizMenu;}
 
     public AdminQuizMenu(Frame frame, Start start) {
         this.frame = frame;
@@ -59,7 +60,6 @@ public class AdminQuizMenu implements ActionListener {
         }
         comboBoxCategory.setModel(comboboxModelKategoria);
 
-
         DefaultComboBoxModel<Integer> comboboxModelObtiaznost = new DefaultComboBoxModel<>();
 
         comboboxModelObtiaznost.addElement(null);
@@ -67,6 +67,32 @@ public class AdminQuizMenu implements ActionListener {
             comboboxModelObtiaznost.addElement(i);
         }
         comboBoxDifficulity.setModel(comboboxModelObtiaznost);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(buttonBack)){
+            this.frame.setContext(new AdminMenu(frame,start).getContent());
+        }
+        if (e.getSource().equals(comboBoxDifficulity)){
+            Integer difficulty = (Integer) comboBoxDifficulity.getSelectedItem();
+            restartTable();
+            updateTableByDifficulty(difficulty);
+        }
+        if (e.getSource().equals(comboBoxCategory)){
+            QuizCategory category = (QuizCategory) comboBoxCategory.getSelectedItem();
+            restartTable();
+            updateTableByCategory(category);
+        }
+        if (e.getSource().equals(buttonDelete)){
+            int selectedRow = tableQuiz.getSelectedRow();
+            Object quizNameForDelete = tableQuiz.getValueAt(selectedRow,1);
+            if (quizNameForDelete != null){
+                String quizNameValue = quizNameForDelete.toString();
+                start.deleteQuiz(quizNameValue);
+                this.frame.setContext(new AdminQuizMenu(frame , start).getContent());
+            }
+        }
     }
 
     public void restartTable () {
@@ -109,33 +135,5 @@ public class AdminQuizMenu implements ActionListener {
             }
         }
         tableQuiz.setModel(model);
-    }
-
-    public JPanel getContent(){return this.panelAdminQuizMenu;}
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(buttonBack)){
-            frame.setContext(new AdminMenu(frame,start).getContent());
-        }
-        if (e.getSource().equals(comboBoxDifficulity)){
-            Integer difficulty = (Integer) comboBoxDifficulity.getSelectedItem();
-            restartTable();
-            updateTableByDifficulty(difficulty);
-        }
-        if (e.getSource().equals(comboBoxCategory)){
-            QuizCategory category = (QuizCategory) comboBoxCategory.getSelectedItem();
-            restartTable();
-            updateTableByCategory(category);
-        }
-        if (e.getSource().equals(buttonDelete)){
-            int selectedRow = tableQuiz.getSelectedRow();
-            Object quizNameForDelete = tableQuiz.getValueAt(selectedRow,1);
-            if (quizNameForDelete != null){
-                String quizNameValue = quizNameForDelete.toString();
-                start.deleteQuiz(quizNameValue);
-                frame.setContext(new AdminQuizMenu(frame , start).getContent());
-            }
-        }
     }
 }

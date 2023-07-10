@@ -2,7 +2,7 @@ package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.entity.Quiz;
 import sk.tomashrdy.entity.QuizCategory;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +20,7 @@ public class CreateQuiz implements ActionListener {
     private JButton buttonBack;
     private Frame frame;
     private Start star;
+    public JPanel getContent(){return this.panelAddQuiz;}
 
     public CreateQuiz(Frame frame, Start star) {
         this.frame = frame;
@@ -34,12 +35,11 @@ public class CreateQuiz implements ActionListener {
         }
         comboBoxLanguage.setModel(comboBoxCategory);
     }
-    public JPanel getContent(){return this.panelAddQuiz;}
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonBack)){
-            frame.setContext(new AdminMenu(frame , star).getContent());
+            this.frame.setContext(new AdminMenu(frame , star).getContent());
         }
         if (e.getSource().equals(buttonNext)){
             if (!tfName.getText().isEmpty() && !tfDescription.getText().isEmpty()){

@@ -2,7 +2,7 @@ package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.entity.Quiz;
 import sk.tomashrdy.entity.QuizCategory;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,11 +15,12 @@ public class ShowQuiz implements ActionListener {
     private JLabel quizLabel;
     private JComboBox comboBoxDificulty;
     private JComboBox comboBoxCategory;
-    private JTable table1;
+    private JTable tableQuiz;
     private JButton buttonStartQuiz;
     private JButton buttonBack;
     Frame frame;
     Start start;
+    public JPanel getContent(){return panelQuiz;}
 
     public ShowQuiz(Frame frame, Start start) {
         this.frame = frame;
@@ -31,7 +32,7 @@ public class ShowQuiz implements ActionListener {
         buttonBack.addActionListener(this);
 
         ArrayList<Quiz> quizs = start.quizForTable();
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableQuiz.getModel();
         model.setRowCount(0);
 
         model.addColumn("Index");
@@ -70,14 +71,37 @@ public class ShowQuiz implements ActionListener {
         comboBoxDificulty.setModel(comboBoxDifficulty);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(buttonBack)){
+            this.frame.setContext(new DashBoard(frame , start).getContent());
+        }
+        if (e.getSource().equals(comboBoxCategory)){
+            QuizCategory category = (QuizCategory) comboBoxCategory.getSelectedItem();
+            restartTable();
+            updateTableByCategory(category);
+        }
+        if (e.getSource().equals(comboBoxDificulty)){
+            Integer difficulty = (Integer) comboBoxDificulty.getSelectedItem();
+            restartTable();
+            updateTableByDifficulty(difficulty);
+        }
+        if (e.getSource().equals(buttonStartQuiz)){
+            int selectedRow = tableQuiz.getSelectedRow();
+            Object quizName = tableQuiz.getValueAt(selectedRow,1);
+            String quizNameValue = quizName.toString();
+            Quiz newQuiz = start.createQuizByName(quizNameValue);
+            this.frame.setContext(new PlayQuiz(frame , start , newQuiz).getContent());
+        }
+    }
     public void restartTable(){
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableQuiz.getModel();
         model.setRowCount(0);
         model.setColumnCount(0);
     }
 
     public void updateTableByDifficulty(Integer difficulty){
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableQuiz.getModel();
 
         model.addColumn("Index");
         model.addColumn("Quiz Name");
@@ -91,11 +115,11 @@ public class ShowQuiz implements ActionListener {
                 index++;
             }
         }
-        table1.setModel(model);
+        tableQuiz.setModel(model);
     }
 
     public void updateTableByCategory(QuizCategory quizCategory){
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableQuiz.getModel();
 
         model.addColumn("Index");
         model.addColumn("Quiz Name");
@@ -109,33 +133,6 @@ public class ShowQuiz implements ActionListener {
                 index++;
             }
         }
-        table1.setModel(model);
-    }
-
-
-    public JPanel getContent(){return panelQuiz;}
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(buttonBack)){
-            frame.setContext(new DashBoard(frame , start).getContent());
-        }
-        if (e.getSource().equals(comboBoxCategory)){
-            QuizCategory category = (QuizCategory) comboBoxCategory.getSelectedItem();
-            restartTable();
-            updateTableByCategory(category);
-        }
-        if (e.getSource().equals(comboBoxDificulty)){
-            Integer difficulty = (Integer) comboBoxDificulty.getSelectedItem();
-            restartTable();
-            updateTableByDifficulty(difficulty);
-        }
-        if (e.getSource().equals(buttonStartQuiz)){
-            int selectedRow = table1.getSelectedRow();
-            Object quizName = table1.getValueAt(selectedRow,1);
-            String quizNameValue = quizName.toString();
-            Quiz newQuiz = start.createQuizByName(quizNameValue);
-            this.frame.setContext(new PlayQuiz(frame , start , newQuiz).getContent());
-        }
+        tableQuiz.setModel(model);
     }
 }

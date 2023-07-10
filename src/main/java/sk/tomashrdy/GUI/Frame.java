@@ -1,7 +1,7 @@
 package sk.tomashrdy.GUI;
 
 
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.*;

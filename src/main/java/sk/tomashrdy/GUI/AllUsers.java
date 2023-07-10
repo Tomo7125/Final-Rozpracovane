@@ -1,17 +1,14 @@
 package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.dbCon.DatabaseConnection;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 import sk.tomashrdy.entity.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 public class AllUsers implements ActionListener {
@@ -23,7 +20,7 @@ public class AllUsers implements ActionListener {
     private JButton buttonBack;
     private Frame frame;
     private Start start;
-    private User user;
+    public JPanel getContent(){return this.panelAllUsers;}
 
     public AllUsers(Frame frame, Start start) {
         this.frame = frame;
@@ -70,28 +67,26 @@ public class AllUsers implements ActionListener {
             table1.setModel(model);
         }
 
-    public JPanel getContent(){return this.panelAllUsers;}
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonBack)){
-            frame.setContext(new AdminMenu(frame , start).getContent());
+            this.frame.setContext(new AdminMenu(frame , start).getContent());
         }
         if (e.getSource().equals(buttonDeleteAllUsers)){
             DatabaseConnection dbCon = new DatabaseConnection();
             dbCon.executeQuery("DELETE FROM users");
             dbCon.disconnect();
             JOptionPane.showMessageDialog(null , "All users is delete" , "Delete" , JOptionPane.WARNING_MESSAGE);
-            frame.setContext(new AllUsers(frame , start).getContent());
+            this.frame.setContext(new AllUsers(frame , start).getContent());
         }
         if (e.getSource().equals(buttonDeleteUser)){
             int selectedRow = table1.getSelectedRow();
             Object email = table1.getValueAt(selectedRow, 3);
             if (email != null) {
                 String emailValue = email.toString();
-                start.deleteUserByEmail(emailValue);
+                this.start.deleteUserByEmail(emailValue);
                 JOptionPane.showMessageDialog(null , emailValue + " is delete" , "User delete" , JOptionPane.INFORMATION_MESSAGE);
-                frame.setContext(new AllUsers(frame , start).getContent());
+                this.frame.setContext(new AllUsers(frame , start).getContent());
             }
         }
     }

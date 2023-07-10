@@ -3,7 +3,7 @@ package sk.tomashrdy.GUI;
 import sk.tomashrdy.entity.Quiz;
 import sk.tomashrdy.entity.QuizOptions;
 import sk.tomashrdy.entity.QuizQuestion;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +32,7 @@ public class CreateQuestion implements ActionListener {
     private Quiz quiz;
     private int questionCount = 0;
     private ButtonGroup buttonGroup;
+    public JPanel getContent(){return this.panelQuestion;}
     public CreateQuestion(Frame frame, Start start, Quiz quiz) {
         this.frame = frame;
         this.start = start;
@@ -49,8 +50,6 @@ public class CreateQuestion implements ActionListener {
         buttonGroup.add(radioButtonOption3);
         buttonGroup.add(radioButtonOption4);
     }
-
-    public JPanel getContent(){return this.panelQuestion;}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,7 +76,7 @@ public class CreateQuestion implements ActionListener {
             tfOption4.setText("");
             buttonGroup.clearSelection();
             jlCount.setText("Question count : " + questionCount);
-            if (questionCount >= 2){  // upravit spe na 5
+            if (questionCount >= 4){
                 buttonSendQuiz.setEnabled(true);
             }
         }

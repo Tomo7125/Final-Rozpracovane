@@ -25,5 +25,3 @@ public class QuizOptions {
         this.isCorrect = isCorrect;
     }
 }
-
-// vyrieöiù preËo sa quiz zobrazÌ 2x , zmeniù start na delete , dorieöiù separovanie

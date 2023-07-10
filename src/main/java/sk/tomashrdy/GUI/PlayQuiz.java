@@ -1,7 +1,7 @@
 package sk.tomashrdy.GUI;
 
 import sk.tomashrdy.entity.Quiz;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -44,18 +44,6 @@ public class PlayQuiz implements ActionListener {
 
     }
 
-    public String correctOption(){
-        if (quiz.getQuestions().get(questionNumber).getTextOptions().get(0).isCorrect()){
-            return quiz.getQuestions().get(questionNumber).getTextOptions().get(0).getTextOptions();
-        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(1).isCorrect()){
-            return quiz.getQuestions().get(questionNumber).getTextOptions().get(1).getTextOptions();
-        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(2).isCorrect()){
-            return quiz.getQuestions().get(questionNumber).getTextOptions().get(2).getTextOptions();
-        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(3).isCorrect()){
-            return quiz.getQuestions().get(questionNumber).getTextOptions().get(3).getTextOptions();
-        } else return null;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(button1)){
@@ -93,5 +81,16 @@ public class PlayQuiz implements ActionListener {
             button4.setText(quiz.getQuestions().get(questionNumber).getTextOptions().get(3).getTextOptions());
             jlScoreInQuiz.setText("Your score is : " + scoreInQuiz);
         }
+    }
+    public String correctOption(){
+        if (quiz.getQuestions().get(questionNumber).getTextOptions().get(0).isCorrect()){
+            return quiz.getQuestions().get(questionNumber).getTextOptions().get(0).getTextOptions();
+        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(1).isCorrect()){
+            return quiz.getQuestions().get(questionNumber).getTextOptions().get(1).getTextOptions();
+        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(2).isCorrect()){
+            return quiz.getQuestions().get(questionNumber).getTextOptions().get(2).getTextOptions();
+        }else if (quiz.getQuestions().get(questionNumber).getTextOptions().get(3).isCorrect()){
+            return quiz.getQuestions().get(questionNumber).getTextOptions().get(3).getTextOptions();
+        } else return null;
     }
 }

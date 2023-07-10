@@ -1,6 +1,6 @@
 package sk.tomashrdy.GUI;
 
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,7 @@ public class DashBoard implements ActionListener {
     private JButton buttonHighScore;
     Frame frame;
     Start start;
+    public JPanel getContent(){return this.panelDashBoard;}
 
     //Konštruktor pre DashBoard
     public DashBoard(Frame frame, Start start) {
@@ -35,18 +36,16 @@ public class DashBoard implements ActionListener {
         if (!start.getUser().isAdmin()){buttonAdminMenu.setVisible(false);}
     }
 
-    //Vracia panel ako content pre okno
-    public JPanel getContent(){return this.panelDashBoard;}
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(buttonAdminMenu)){
-            frame.setContext(new AdminMenu(frame , start).getContent());
+            this.frame.setContext(new AdminMenu(frame , start).getContent());
         }
         if (e.getSource().equals(buttonLogout)){
-            frame.setContext(new LoginWindow(frame , start).getContent());
+            this.frame.setContext(new LoginWindow(frame , start).getContent());
         }
         if (e.getSource().equals(buttonQuiz)){
-            frame.setContext(new ShowQuiz(frame , start).getContent());
+            this.frame.setContext(new ShowQuiz(frame , start).getContent());
         }
         if (e.getSource().equals(buttonHighScore)){
             this.frame.setContext(new HighScore(frame , start).getContent());

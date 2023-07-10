@@ -1,17 +1,17 @@
-package sk.tomashrdy.entity;
+package sk.tomashrdy.start;
 
 import sk.tomashrdy.GUI.Frame;
 import sk.tomashrdy.dbCon.DatabaseConnection;
+import sk.tomashrdy.entity.*;
 
-import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Start {
     //Použijem na uloženie prihláseného používatela
@@ -220,5 +220,84 @@ public class Start {
         }
 
         return allUsers;
+    }
+    //Metoda na kontrolu emailu a hesla
+    public boolean loginControl(String email, String password) {
+        // V query si vytvorím dotaz na DB kolko riadkov obsahuje daný email a heslo ( je potrebné heslo posiela už zašifrované )
+        String query = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?";
+        //Štandardne je loginSuccessful false zmením ho neskôr ak sa bude zhodova nejaky mail a heslo so zadanými
+        boolean loginSuccessful = false;
+
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        //Vytvorenie prepojenia a zadanie query , výsledok sa uloží do resulSetu
+        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                //Do count sa mi uložilo èíslo z prveho columu resultsetu , následne nižšie skontrolujem èi je count veèší ako 0
+                // ak je veèší tak v databaze je email a heslo ktore som zadal do loginu -> loginsuccessful sa zmení na true
+                loginSuccessful = (count > 0);
+            }
+            databaseConnection.disconnect();
+        } catch (SQLException e) {
+            // Spracovanie chyby pri vykonávaní dotazu
+        }
+        return loginSuccessful;
+    }
+    //Metoda ktora mi bude vracia celu zložku uživatela podla emailu
+    public User getUserByEmail(String email) {
+        User user = null;
+        //Dotaz na DB aby mi vitiahla first_name , last_name , email a to èi je admin užívatel podla emailu ( vstupný parameter email )
+        String query = "SELECT first_name, last_name, email , isAdmin , score FROM users WHERE email = ?";
+
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+            //Pridám si do query mail zo vstupu a hodím ho na prvý otáznik
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                //Poukladám si do premenných údaje ktore som si vyžiadal podla názvov stlpcov
+                String name = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String userEmail = resultSet.getString("email");
+                int score = resultSet.getInt("score");
+                boolean isAdmin = resultSet.getBoolean("isAdmin");
+                //Vytvorím si Usera a nasetujem mu premenne
+                user = new User(name, lastName, userEmail , isAdmin , score);
+            }
+        } catch (SQLException e) {
+            // Spracovanie chyby pri vykonávaní dotazu
+        }
+
+        return user;
+    }
+
+    //Metoda pre ooverenie èi existuje email ( apríklad pri registrácii overím èi email existuje ak ano nepridám ho znova )
+    public boolean emailExist(String email) {
+        boolean mailExist = false;
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        //Vytvorím dotaz aby mi spoèital poèet výskytov kde email je rovnaký ako email ktorý som zadal na vstupe
+        String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+        //Pridám do statementu email zo vstupu ( všade sa snažím ošetri mail metodou .toLoweCase() aby som sa vyhol problémom pri porovnávani )
+        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+            statement.setString(1, email.toLowerCase());
+            // Ak je poèet výskitov veèší ako 0 tak mi uloží do mailExist true
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    mailExist = (count > 0);
+                }
+            }
+            databaseConnection.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        return mailExist;
     }
 }

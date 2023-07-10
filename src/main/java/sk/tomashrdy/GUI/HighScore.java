@@ -1,7 +1,6 @@
 package sk.tomashrdy.GUI;
 
-import sk.tomashrdy.entity.Quiz;
-import sk.tomashrdy.entity.Start;
+import sk.tomashrdy.start.Start;
 import sk.tomashrdy.entity.User;
 
 import javax.swing.*;

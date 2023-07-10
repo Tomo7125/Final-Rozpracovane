@@ -1,15 +1,14 @@
 package sk.tomashrdy.dbCon;
 
-import sk.tomashrdy.entity.User;
-
 import java.sql.*;
-import java.util.ArrayList;
+
 
 public class DatabaseConnection {
     private Connection connection;
     //Hodnoty pre pripojenie na moju DB
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
+    //Heslo mam uloené ako premennu v mojom PC
     private final String password = System.getenv("DB_PASSWORD");
 
     //Metoda pre pripojenie na DB
@@ -61,7 +60,7 @@ public class DatabaseConnection {
         return resultSet;
     }
 
-    //Metoda ktora mi updatuje data Napriklad ked chcem prida do databázy záznam a vracia mi int s poètom zaznamov ktoré boli zmenené / pridané
+    //Metoda ktorá mi updatuje data. Napríklad ked chcem prida do databázy záznam a vracia mi int s poètom záznamov ktoré boli zmenené / pridané
     public int executeUpdate(String query, Object... parameters) {
         int rowsAffected = 0;
         try {
@@ -83,7 +82,7 @@ public class DatabaseConnection {
         }
     }
 
-    //Metoda vytvorí prepojenie na databazu a vrati prepareStatement ktorı obsahuje pripravenú query na odoslanie do DB
+    //Metoda vytvorí prepojenie na databázu a vrati prepareStatement ktorı obsahuje pripravenú query na odoslanie do DB
     public PreparedStatement prepareStatement(String query) throws SQLException {
         connect();
         return connection.prepareStatement(query);

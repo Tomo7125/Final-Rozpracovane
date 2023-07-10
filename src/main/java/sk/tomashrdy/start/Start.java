@@ -300,4 +300,11 @@ public class Start {
 
         return mailExist;
     }
+    //Metoda ktorá mi pridá noveho užívatela do databázy pomocou mojej metódy executeUpdate
+    public void userRegister(User user){
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin, score) VALUES (?, ?, ?, ?, ?, 0)" ,
+                user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.isAdmin());
+        databaseConnection.disconnect();
+    }
 }

@@ -1,7 +1,9 @@
 package sk.tomashrdy.entity;
 
 public class QuizOptions {
+    //Text odpovede
     private String textOptions;
+    //boolean èi je odpoveï správna
     private boolean isCorrect;
 
     public QuizOptions(String textOptions, boolean isCorrect) {

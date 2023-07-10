@@ -3,11 +3,6 @@ package sk.tomashrdy.entity;
 
 import sk.tomashrdy.dbCon.DatabaseConnection;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-
 public class User {
     private String name , lastName , email , password;
     private int score = 0;
@@ -33,7 +28,7 @@ public class User {
     public User() {
     }
 
-    //Konštruktor pouívany keï aham udaje z databázy a ukladam pouívatela tam mi netreba heslo
+    //Konštruktor pouívany keï aham údaje z databázy a ukladam pouívatela tam mi netreba heslo
     public User(String name, String lastName, String email , boolean isAdmin , int score) {
         this.name = name;
         this.lastName = lastName;
@@ -48,7 +43,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
 
     public String getName() {
         return name;
@@ -66,11 +60,4 @@ public class User {
         return password;
     }
 
-    //Metoda ktorá mi pridá noveho uívatela do databázy pomocou mojej metódy executeUpdate
-    public void userRegister(User user){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin, score) VALUES (?, ?, ?, ?, ?, 0)" ,
-                user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.admin);
-        databaseConnection.disconnect();
-    }
 }

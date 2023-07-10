@@ -1,26 +1,12 @@
 package sk.tomashrdy.entity;
 
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Quiz {
     private String nameForFile;
-
-    public String getNameForFile() {
-        return nameForFile;
-    }
-
-    public void setNameForFile(String nameForFile) {
-        this.nameForFile = nameForFile;
-    }
-
     //nazov
     private String name;
-    //kategoriu
+    //kategoria
     private QuizCategory quizCategory;
     //obtiaznost
     private int difficulty; //1..5
@@ -56,6 +42,13 @@ public class Quiz {
 
     public void setQuestions(ArrayList<QuizQuestion> questions) {
         this.questions = questions;
+    }
+    public String getNameForFile() {
+        return nameForFile;
+    }
+
+    public void setNameForFile(String nameForFile) {
+        this.nameForFile = nameForFile;
     }
 
     public void addQuestion(QuizQuestion question){

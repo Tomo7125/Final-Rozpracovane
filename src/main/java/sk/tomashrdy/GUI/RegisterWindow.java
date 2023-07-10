@@ -136,7 +136,7 @@ public class RegisterWindow implements ActionListener, HashPassword {
                                 //Vytvorím nového Usera ktorému nastavím hodnoty z fieldov
                                 User newUser = new User(tfFirstName.getText(), tfLastName.getText(), tfEmail.getText().toLowerCase(), HashPassword.hashPassword(pass1));
                                 //Zavolám si metódu ktorá zaregistruje užívatela
-                                newUser.userRegister(newUser);
+                                start.userRegister(newUser);
                                 //Nastavím nový context
                                 this.frame.setContext(new LoginWindow(frame , start).getContent());
                                 // Zavolám vyskakovacie okno ktore oznámy že je užívatel úspešne zaregistrovaný

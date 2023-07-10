@@ -3,7 +3,9 @@ package sk.tomashrdy.entity;
 import java.util.ArrayList;
 
 public class QuizQuestion {
+    //Text otázky
     private String textQuestion;
+    //ArrayList ktorý obsahuje odpovede ku otázke
     private ArrayList<QuizOptions> textOptions;
 
     public QuizQuestion(String textQuestion, ArrayList<QuizOptions> textOptions) {

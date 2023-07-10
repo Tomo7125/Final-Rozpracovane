@@ -44,8 +44,8 @@ public class CreateQuiz implements ActionListener {
         if (e.getSource().equals(buttonNext)){
             if (!tfName.getText().isEmpty() && !tfDescription.getText().isEmpty()){
                 Quiz quiz = new Quiz();
-                quiz.setName(tfName.getText());
-                quiz.setShortDescrition(tfDescription.getText());
+                quiz.setNameForFile(tfName.getText());
+                quiz.setName(tfDescription.getText());
                 quiz.setQuizCategory((QuizCategory) comboBoxLanguage.getSelectedItem());
                 quiz.setDifficulty(sliderDifficulty.getValue());
                 this.frame.setContext( new CreateQuestion(frame , star , quiz).getContent());

@@ -8,6 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Quiz {
+    private String nameForFile;
+
+    public String getNameForFile() {
+        return nameForFile;
+    }
+
+    public void setNameForFile(String nameForFile) {
+        this.nameForFile = nameForFile;
+    }
+
     //nazov
     private String name;
     //kategoriu
@@ -16,16 +26,6 @@ public class Quiz {
     private int difficulty; //1..5
     //kolekcia otazok
     private ArrayList<QuizQuestion> questions;
-    private String shortDescrition;
-
-    public String getShortDescrition() {
-        return shortDescrition;
-    }
-
-    public void setShortDescrition(String shortDescrition) {
-        this.shortDescrition = shortDescrition;
-    }
-
     public String getName() {
         return name;
     }

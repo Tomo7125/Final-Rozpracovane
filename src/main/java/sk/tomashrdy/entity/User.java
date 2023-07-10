@@ -73,29 +73,4 @@ public class User {
                 user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.admin);
         databaseConnection.disconnect();
     }
-    public ArrayList<User> getAllUsers() {
-        ArrayList<User> allUsers = new ArrayList<>();
-        DatabaseConnection dbConnect = new DatabaseConnection();
-        ResultSet resultSet;
-
-        resultSet = dbConnect.executeQuery("SELECT * FROM users");
-
-        try {
-            while (resultSet.next()) {
-                String name = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                String email = resultSet.getString("email");
-                int score = resultSet.getInt("score");
-                Boolean isAdmin = resultSet.getBoolean("isAdmin");
-
-                User user = new User(name, lastName, email , isAdmin , score);
-                allUsers.add(user);
-            }
-            dbConnect.disconnect();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return allUsers;
-    }
 }

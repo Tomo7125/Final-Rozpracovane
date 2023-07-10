@@ -32,7 +32,7 @@ public class AllUsers implements ActionListener {
         buttonDeleteAllUsers.addActionListener(this);
         buttonDeleteUser.addActionListener(this);
 
-        ArrayList<User> users = user.getAllUsers();
+        ArrayList<User> users = start.getAllUsers();
 
             DefaultTableModel model = (DefaultTableModel) table1.getModel();
 

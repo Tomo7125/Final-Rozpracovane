@@ -31,7 +31,7 @@ public class CreateQuestion implements ActionListener {
     private Start start;
     private Quiz quiz;
     private int questionCount = 0;
-
+    private ButtonGroup buttonGroup;
     public CreateQuestion(Frame frame, Start start, Quiz quiz) {
         this.frame = frame;
         this.start = start;
@@ -44,6 +44,10 @@ public class CreateQuestion implements ActionListener {
         if (questionCount >= 5){
             buttonSendQuiz.setEnabled(true);
         }
+        buttonGroup.add(radioButtonOption1);
+        buttonGroup.add(radioButtonOption2);
+        buttonGroup.add(radioButtonOption3);
+        buttonGroup.add(radioButtonOption4);
     }
 
     public JPanel getContent(){return this.panelQuestion;}
@@ -71,11 +75,6 @@ public class CreateQuestion implements ActionListener {
             tfOption2.setText("");
             tfOption3.setText("");
             tfOption4.setText("");
-            ButtonGroup buttonGroup = new ButtonGroup();
-            buttonGroup.add(radioButtonOption1);
-            buttonGroup.add(radioButtonOption2);
-            buttonGroup.add(radioButtonOption3);
-            buttonGroup.add(radioButtonOption4);
             buttonGroup.clearSelection();
             jlCount.setText("Question count : " + questionCount);
             if (questionCount >= 2){  // upravit spe na 5

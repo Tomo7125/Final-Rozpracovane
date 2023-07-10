@@ -47,6 +47,19 @@ public class DatabaseConnection {
         }
         return resultSet;
     }
+    public ResultSet executeQuery(String query, String parameter) {
+        ResultSet resultSet = null;
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, parameter);
+            resultSet = statement.executeQuery();
+            disconnect();
+        } catch (SQLException e) {
+            // Spracovanie chyby pri vykon·vanÌ dotazu
+        }
+        return resultSet;
+    }
 
     //Metoda ktora mi updatuje data Napriklad ked chcem pridaù do datab·zy z·znam a vracia mi int s poËtom zaznamov ktorÈ boli zmenenÈ / pridanÈ
     public int executeUpdate(String query, Object... parameters) {
@@ -75,21 +88,21 @@ public class DatabaseConnection {
         connect();
         return connection.prepareStatement(query);
     }
-
-    public ArrayList<User> getAllUser() {
-        ArrayList<User> allUser = new ArrayList<>();
-        ResultSet users = executeQuery("SELECT * FROM users");
-
-        try {
-            while (users.next()) {
-                User user = new User(users.getString("first_name"), users.getString("last_name"),
-                        users.getString("email"), users.getBoolean("isAdmin") , users.getInt("score"));
-                allUser.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allUser;
-    }
+    // Metoda upraven· a presunut· do triedy User
+//    public ArrayList<User> getAllUser() {
+//        ArrayList<User> allUser = new ArrayList<>();
+//        ResultSet users = executeQuery("SELECT * FROM users");
+//
+//        try {
+//            while (users.next()) {
+//                User user = new User(users.getString("first_name"), users.getString("last_name"),
+//                        users.getString("email"), users.getBoolean("isAdmin") , users.getInt("score"));
+//                allUser.add(user);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return allUser;
+//    }
 }
 

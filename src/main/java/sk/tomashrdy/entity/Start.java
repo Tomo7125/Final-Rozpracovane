@@ -8,6 +8,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,15 +72,14 @@ public class Start {
         return quiz;
     }
 
-    public ArrayList<Quiz> createQuizFromTXT() {
+    public Quiz createQuizByName(String name) {
         String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy";
-        ArrayList<Quiz> quiz = new ArrayList<>();
         File directory = new File(path);
+        Quiz newQuiz = new Quiz();
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    Quiz newQuiz = new Quiz();
                     if (file.isFile() && file.getName().endsWith(".txt")) {
                         ArrayList<String> lines = new ArrayList<>();
                         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -89,7 +90,7 @@ public class Start {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if (!lines.isEmpty()) {
+                        if (!lines.isEmpty() && lines.get(0).startsWith(name)) {
                             String firstLine = lines.get(0);
                             String[] splitFirstLine = firstLine.split(";");
                             newQuiz.setName(splitFirstLine[0]);
@@ -115,13 +116,13 @@ public class Start {
                                         quizQuestion.addOptions(quizOption);
                                 }
                             }
+                            break;
                         }
                     }
-                    quiz.add(newQuiz);
                 }
             }
         }
-        return quiz;
+        return newQuiz;
     }
     public void deleteQuiz(String quizNameForDelete){
         String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy";
@@ -149,9 +150,9 @@ public class Start {
         }
     }
     public void createNewQuiz(Quiz quiz){
-        String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy\\" + quiz.getName() + ".txt";
+        String path = "D:\\Kurz\\Macrosoft\\Final_Projekt_02\\Kvizy\\" + quiz.getNameForFile() + ".txt";
         try (FileWriter writer = new FileWriter(path , true)) {
-           writer.write(quiz.getShortDescrition() + ";" + quiz.getQuizCategory() + ";" + quiz.getDifficulty());
+           writer.write(quiz.getName() + ";" + quiz.getQuizCategory() + ";" + quiz.getDifficulty());
            ArrayList<QuizQuestion> quizQuestions = new ArrayList<>();
            quizQuestions = quiz.getQuestions();
            for (int i = 0 ; i < quizQuestions.size() ; i++){
@@ -163,5 +164,61 @@ public class Start {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    public void updateScore(String userEmail, Integer scoreFromQuiz) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ResultSet resultSet = databaseConnection.executeQuery("SELECT score FROM users WHERE email = ?", userEmail);
+        try {
+            if (resultSet.next()) {
+                int newScore = resultSet.getInt("score");
+                newScore += scoreFromQuiz;
+                databaseConnection.executeUpdate("UPDATE users SET score = ? WHERE email = ?", newScore, userEmail);
+            } else {
+                // Riadok s daným emailom nebol nájdený
+                throw new RuntimeException("Riadok s daným emailom nebol nájdený.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public int getScore(String email){
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ResultSet resultSet = databaseConnection.executeQuery("SELECT score FROM users WHERE email = ?", email);
+        try {
+            if (resultSet.next()) {
+                int score = resultSet.getInt("score");
+                return score;
+            } else {
+                // Riadok s daným emailom nebol nájdený
+                throw new RuntimeException("Riadok s daným emailom nebol nájdený.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> allUsers = new ArrayList<>();
+        DatabaseConnection dbConnect = new DatabaseConnection();
+        ResultSet resultSet;
+
+        resultSet = dbConnect.executeQuery("SELECT * FROM users");
+
+        try {
+            while (resultSet.next()) {
+                String name = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String email = resultSet.getString("email");
+                int score = resultSet.getInt("score");
+                Boolean isAdmin = resultSet.getBoolean("isAdmin");
+
+                User user = new User(name, lastName, email , isAdmin , score);
+                allUsers.add(user);
+            }
+            dbConnect.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allUsers;
     }
 }

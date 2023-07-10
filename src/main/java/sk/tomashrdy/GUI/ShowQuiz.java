@@ -130,5 +130,12 @@ public class ShowQuiz implements ActionListener {
             restartTable();
             updateTableByDifficulty(difficulty);
         }
+        if (e.getSource().equals(buttonStartQuiz)){
+            int selectedRow = table1.getSelectedRow();
+            Object quizName = table1.getValueAt(selectedRow,1);
+            String quizNameValue = quizName.toString();
+            Quiz newQuiz = start.createQuizByName(quizNameValue);
+            this.frame.setContext(new PlayQuiz(frame , start , newQuiz).getContent());
+        }
     }
 }

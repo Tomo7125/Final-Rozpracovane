@@ -26,13 +26,13 @@ public class Start {
         this.user = user;
     }
     //Konötruktor
-    public Start() {
-    }
+    public Start() {}
+    private DatabaseConnection databaseConnection;
     //MetÛda pre spustenie programu
     public void spusti(){Frame frame = new Frame(this);}
 
     public void deleteUserByEmail(String email){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
+
         databaseConnection.executeUpdate("DELETE FROM users WHERE email = ?" ,
                 email);
         databaseConnection.disconnect();
@@ -166,7 +166,6 @@ public class Start {
         }
     }
     public void updateScore(String userEmail, Integer scoreFromQuiz) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         ResultSet resultSet = databaseConnection.executeQuery("SELECT score FROM users WHERE email = ?", userEmail);
         try {
             if (resultSet.next()) {
@@ -182,7 +181,6 @@ public class Start {
         }
     }
     public int getScore(String email){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         ResultSet resultSet = databaseConnection.executeQuery("SELECT score FROM users WHERE email = ?", email);
         try {
             if (resultSet.next()) {
@@ -198,10 +196,9 @@ public class Start {
     }
     public ArrayList<User> getAllUsers() {
         ArrayList<User> allUsers = new ArrayList<>();
-        DatabaseConnection dbConnect = new DatabaseConnection();
         ResultSet resultSet;
 
-        resultSet = dbConnect.executeQuery("SELECT * FROM users");
+        resultSet = databaseConnection.executeQuery("SELECT * FROM users");
 
         try {
             while (resultSet.next()) {
@@ -214,7 +211,7 @@ public class Start {
                 User user = new User(name, lastName, email , isAdmin , score);
                 allUsers.add(user);
             }
-            dbConnect.disconnect();
+            databaseConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -228,7 +225,6 @@ public class Start {
         //ätandardne je loginSuccessful false zmenÌm ho neskÙr ak sa bude zhodovaù nejaky mail a heslo so zadan˝mi
         boolean loginSuccessful = false;
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         //Vytvorenie prepojenia a zadanie query , v˝sledok sa uloûÌ do resulSetu
         try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
             statement.setString(1, email);
@@ -253,7 +249,6 @@ public class Start {
         //Dotaz na DB aby mi vitiahla first_name , last_name , email a to Ëi je admin uûÌvatel podla emailu ( vstupn˝ parameter email )
         String query = "SELECT first_name, last_name, email , isAdmin , score FROM users WHERE email = ?";
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
             //Prid·m si do query mail zo vstupu a hodÌm ho na prv˝ ot·znik
             statement.setString(1, email);
@@ -279,7 +274,6 @@ public class Start {
     //Metoda pre ooverenie Ëi existuje email ( aprÌklad pri registr·cii overÌm Ëi email existuje ak ano neprid·m ho znova )
     public boolean emailExist(String email) {
         boolean mailExist = false;
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         //VytvorÌm dotaz aby mi spoËital poËet v˝skytov kde email je rovnak˝ ako email ktor˝ som zadal na vstupe
         String query = "SELECT COUNT(*) FROM users WHERE email = ?";
         //Prid·m do statementu email zo vstupu ( vöade sa snaûÌm oöetriù mail metodou .toLoweCase() aby som sa vyhol problÈmom pri porovn·vani )
@@ -302,7 +296,6 @@ public class Start {
     }
     //Metoda ktor· mi prid· noveho uûÌvatela do datab·zy pomocou mojej metÛdy executeUpdate
     public void userRegister(User user){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
         databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin, score) VALUES (?, ?, ?, ?, ?, 0)" ,
                 user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.isAdmin());
         databaseConnection.disconnect();

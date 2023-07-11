@@ -20,6 +20,7 @@ public class AllUsers implements ActionListener {
     private JButton buttonBack;
     private Frame frame;
     private Start start;
+    private DatabaseConnection databaseConnection;
     public JPanel getContent(){return this.panelAllUsers;}
 
     public AllUsers(Frame frame, Start start) {
@@ -73,9 +74,8 @@ public class AllUsers implements ActionListener {
             this.frame.setContext(new AdminMenu(frame , start).getContent());
         }
         if (e.getSource().equals(buttonDeleteAllUsers)){
-            DatabaseConnection dbCon = new DatabaseConnection();
-            dbCon.executeQuery("DELETE FROM users");
-            dbCon.disconnect();
+            databaseConnection.executeQuery("DELETE FROM users");
+            databaseConnection.disconnect();
             JOptionPane.showMessageDialog(null , "All users is delete" , "Delete" , JOptionPane.WARNING_MESSAGE);
             this.frame.setContext(new AllUsers(frame , start).getContent());
         }

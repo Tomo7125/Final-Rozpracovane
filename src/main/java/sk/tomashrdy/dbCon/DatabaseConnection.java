@@ -4,21 +4,24 @@ import java.sql.*;
 
 
 public class DatabaseConnection {
+    private static DatabaseConnection databaseConnection;
     private Connection connection;
-    //Hodnoty pre pripojenie na moju DB
-    private final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private final String username = "postgres";
-    //Heslo mam uložené ako premennu v mojom PC
     private final String password = System.getenv("DB_PASSWORD");
 
-    //Metoda pre pripojenie na DB
-    public String connect() {
+    private DatabaseConnection() {
         try {
-            connection = DriverManager.getConnection(url, username, password);
+
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres",password);
+            this.connection = con;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        return null;
+    }
+    public static DatabaseConnection getConection(){
+        if (databaseConnection == null){
+            databaseConnection = new DatabaseConnection();
+        }return databaseConnection;
     }
 
     //Metoda pre odpojenie DB
@@ -36,7 +39,6 @@ public class DatabaseConnection {
     public ResultSet executeQuery(String query) {
         ResultSet resultSet = null;
         try {
-            connect();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             disconnect();
@@ -49,7 +51,6 @@ public class DatabaseConnection {
     public ResultSet executeQuery(String query, String parameter) {
         ResultSet resultSet = null;
         try {
-            connect();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, parameter);
             resultSet = statement.executeQuery();
@@ -64,7 +65,6 @@ public class DatabaseConnection {
     public int executeUpdate(String query, Object... parameters) {
         int rowsAffected = 0;
         try {
-            connect();
             PreparedStatement statement = connection.prepareStatement(query);
             setParameters(statement, parameters);
             rowsAffected = statement.executeUpdate();
@@ -84,7 +84,6 @@ public class DatabaseConnection {
 
     //Metoda vytvorí prepojenie na databázu a vrati prepareStatement ktorý obsahuje pripravenú query na odoslanie do DB
     public PreparedStatement prepareStatement(String query) throws SQLException {
-        connect();
         return connection.prepareStatement(query);
     }
     // Metoda upravená a presunutá do triedy User

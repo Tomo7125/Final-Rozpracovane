@@ -1,27 +1,32 @@
 package sk.tomashrdy.dbCon;
 
+import sk.tomashrdy.entity.User;
+
 import java.sql.*;
 
 
 public class DatabaseConnection {
     private static DatabaseConnection databaseConnection;
+
+
     private Connection connection;
-    private final String password = System.getenv("DB_PASSWORD");
 
     private DatabaseConnection() {
         try {
 
-            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres",password);
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", System.getenv("DB_PASSWORD"));
             this.connection = con;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static DatabaseConnection getConection(){
-        if (databaseConnection == null){
+
+    public static DatabaseConnection getDB_con() {
+        if (databaseConnection == null) {
             databaseConnection = new DatabaseConnection();
-        }return databaseConnection;
+        }
+        return databaseConnection;
     }
 
     //Metoda pre odpojenie DB
@@ -35,26 +40,32 @@ public class DatabaseConnection {
         }
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     // Metoda ktora odosiela query do DB a vracia mi ResultSet
     public ResultSet executeQuery(String query) {
         ResultSet resultSet = null;
         try {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
-            disconnect();
-
         } catch (SQLException e) {
             // Spracovanie chyby pri vykonávaní dotazu
         }
         return resultSet;
     }
+
     public ResultSet executeQuery(String query, String parameter) {
         ResultSet resultSet = null;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, parameter);
             resultSet = statement.executeQuery();
-            disconnect();
         } catch (SQLException e) {
             // Spracovanie chyby pri vykonávaní dotazu
         }
@@ -68,7 +79,6 @@ public class DatabaseConnection {
             PreparedStatement statement = connection.prepareStatement(query);
             setParameters(statement, parameters);
             rowsAffected = statement.executeUpdate();
-            disconnect();
         } catch (SQLException e) {
             // Spracovanie chyby pri vykonávaní aktualizácie
         }
@@ -86,21 +96,5 @@ public class DatabaseConnection {
     public PreparedStatement prepareStatement(String query) throws SQLException {
         return connection.prepareStatement(query);
     }
-    // Metoda upravená a presunutá do triedy User
-//    public ArrayList<User> getAllUser() {
-//        ArrayList<User> allUser = new ArrayList<>();
-//        ResultSet users = executeQuery("SELECT * FROM users");
-//
-//        try {
-//            while (users.next()) {
-//                User user = new User(users.getString("first_name"), users.getString("last_name"),
-//                        users.getString("email"), users.getBoolean("isAdmin") , users.getInt("score"));
-//                allUser.add(user);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return allUser;
-//    }
 }
 

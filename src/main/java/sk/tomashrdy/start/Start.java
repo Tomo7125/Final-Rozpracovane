@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,14 +29,18 @@ public class Start {
     //Konštruktor
     public Start() {}
     private DatabaseConnection databaseConnection;
+    Connection connection;
     //Metóda pre spustenie programu
-    public void spusti(){Frame frame = new Frame(this);}
+    public void spusti(){
+        databaseConnection = DatabaseConnection.getDB_con();
+        connection = databaseConnection.getConnection();
+        Frame frame = new Frame(this);
+    }
 
     public void deleteUserByEmail(String email){
 
         databaseConnection.executeUpdate("DELETE FROM users WHERE email = ?" ,
                 email);
-        databaseConnection.disconnect();
     }
 
     public ArrayList<Quiz> quizForTable(){
@@ -211,7 +216,6 @@ public class Start {
                 User user = new User(name, lastName, email , isAdmin , score);
                 allUsers.add(user);
             }
-            databaseConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -226,7 +230,7 @@ public class Start {
         boolean loginSuccessful = false;
 
         //Vytvorenie prepojenia a zadanie query , výsledok sa uloží do resulSetu
-        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, password);
 
@@ -237,7 +241,6 @@ public class Start {
                 // ak je veèší tak v databaze je email a heslo ktore som zadal do loginu -> loginsuccessful sa zmení na true
                 loginSuccessful = (count > 0);
             }
-            databaseConnection.disconnect();
         } catch (SQLException e) {
             // Spracovanie chyby pri vykonávaní dotazu
         }
@@ -249,7 +252,7 @@ public class Start {
         //Dotaz na DB aby mi vitiahla first_name , last_name , email a to èi je admin užívatel podla emailu ( vstupný parameter email )
         String query = "SELECT first_name, last_name, email , isAdmin , score FROM users WHERE email = ?";
 
-        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             //Pridám si do query mail zo vstupu a hodím ho na prvý otáznik
             statement.setString(1, email);
 
@@ -277,7 +280,7 @@ public class Start {
         //Vytvorím dotaz aby mi spoèital poèet výskytov kde email je rovnaký ako email ktorý som zadal na vstupe
         String query = "SELECT COUNT(*) FROM users WHERE email = ?";
         //Pridám do statementu email zo vstupu ( všade sa snažím ošetri mail metodou .toLoweCase() aby som sa vyhol problémom pri porovnávani )
-        try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email.toLowerCase());
             // Ak je poèet výskitov veèší ako 0 tak mi uloží do mailExist true
             try (ResultSet rs = statement.executeQuery()) {
@@ -286,7 +289,6 @@ public class Start {
                     mailExist = (count > 0);
                 }
             }
-            databaseConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -298,6 +300,5 @@ public class Start {
     public void userRegister(User user){
         databaseConnection.executeUpdate("INSERT INTO users (first_name, last_name, email, password, isadmin, score) VALUES (?, ?, ?, ?, ?, 0)" ,
                 user.getName() , user.getLastName() , user.getEmail() , user.getPassword() , user.isAdmin());
-        databaseConnection.disconnect();
     }
 }

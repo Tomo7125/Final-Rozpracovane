@@ -55,7 +55,7 @@ public class DatabaseConnection {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
-            // Spracovanie chyby pri vykonávaní dotazu
+            disconnect();
         }
         return resultSet;
     }
@@ -67,7 +67,7 @@ public class DatabaseConnection {
             statement.setString(1, parameter);
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
-            // Spracovanie chyby pri vykonávaní dotazu
+            disconnect();
         }
         return resultSet;
     }
@@ -80,7 +80,7 @@ public class DatabaseConnection {
             setParameters(statement, parameters);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
-            // Spracovanie chyby pri vykonávaní aktualizácie
+            disconnect();
         }
         return rowsAffected;
     }

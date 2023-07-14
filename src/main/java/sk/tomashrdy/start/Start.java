@@ -182,7 +182,7 @@ public class Start {
                 throw new RuntimeException("Riadok s daným emailom nebol nájdený.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
     public int getScore(String email){
@@ -196,8 +196,9 @@ public class Start {
                 throw new RuntimeException("Riadok s daným emailom nebol nájdený.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return 0;
     }
     public ArrayList<User> getAllUsers() {
         ArrayList<User> allUsers = new ArrayList<>();
@@ -242,7 +243,7 @@ public class Start {
                 loginSuccessful = (count > 0);
             }
         } catch (SQLException e) {
-            // Spracovanie chyby pri vykonávaní dotazu
+            e.printStackTrace();
         }
         return loginSuccessful;
     }
@@ -268,7 +269,7 @@ public class Start {
                 user = new User(name, lastName, userEmail , isAdmin , score);
             }
         } catch (SQLException e) {
-            // Spracovanie chyby pri vykonávaní dotazu
+            e.printStackTrace();
         }
 
         return user;
@@ -291,7 +292,6 @@ public class Start {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
         }
 
         return mailExist;

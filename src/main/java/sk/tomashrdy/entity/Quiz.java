@@ -2,6 +2,7 @@ package sk.tomashrdy.entity;
 
 import java.util.ArrayList;
 
+
 public class Quiz {
     private String nameForFile;
     //nazov

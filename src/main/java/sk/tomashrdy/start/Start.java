@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 public class Start {
     //Pouûijem na uloûenie prihl·senÈho pouûÌvatela
-    User user;
+    private User user;
+    private Frame frame;
 
     //Vr·ti udaje pouûÌvatela ktorÈho tu budem maù uloûeneho ako prihlaseneho
     public User getUser() {
@@ -34,7 +35,7 @@ public class Start {
     public void spusti(){
         databaseConnection = DatabaseConnection.getDB_con();
         connection = databaseConnection.getConnection();
-        Frame frame = new Frame(this);
+        frame = new Frame(this);
     }
 
     public void deleteUserByEmail(String email){
@@ -212,7 +213,7 @@ public class Start {
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
                 int score = resultSet.getInt("score");
-                Boolean isAdmin = resultSet.getBoolean("isAdmin");
+                boolean isAdmin = resultSet.getBoolean("isAdmin");
 
                 User user = new User(name, lastName, email , isAdmin , score);
                 allUsers.add(user);

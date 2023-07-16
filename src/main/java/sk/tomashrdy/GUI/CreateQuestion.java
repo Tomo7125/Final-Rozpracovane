@@ -31,7 +31,7 @@ public class CreateQuestion implements ActionListener {
     private Start start;
     private Quiz quiz;
     private int questionCount = 0;
-    private ButtonGroup buttonGroup;
+    public ButtonGroup buttonGroup;
     public JPanel getContent(){return this.panelQuestion;}
     public CreateQuestion(Frame frame, Start start, Quiz quiz) {
         this.frame = frame;
@@ -45,6 +45,7 @@ public class CreateQuestion implements ActionListener {
         if (questionCount >= 5){
             buttonSendQuiz.setEnabled(true);
         }
+        buttonGroup = new ButtonGroup();
         buttonGroup.add(radioButtonOption1);
         buttonGroup.add(radioButtonOption2);
         buttonGroup.add(radioButtonOption3);

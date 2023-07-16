@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Final_Projekt_02" />
+        <module name="QuizApp" />
       </profile>
     </annotationProcessing>
   </component>
